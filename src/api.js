@@ -215,6 +215,11 @@ exports.initAPI = function() {
 				// Update variables
 				data.inputs.forEach(input => {
 					const previousState = this.data.inputs.find(item => item.key === input.key);
+					
+					// Check input has name and a different or no previous shortTitle
+					if (input.shortTitle !== undefined && (previousState === undefined || input.shortTitle !== previousState.shortTitle)) {
+						this.setVariable(`input_${input.number}_name`, input.shortTitle);
+					}
 
 					// Check input has volume and a different or no previous volume
 					if (input.volume !== undefined && (previousState === undefined || input.volume !== previousState.volume)) {

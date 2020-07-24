@@ -9,6 +9,11 @@ exports.updateVariableDefinitions = function() {
 	});
 
 	this.data.inputs.forEach(input => {
+		variables.push({
+			label: `Input ${input.number} Name`,
+			name: `input_${input.number}_name`
+		})
+
 		if (input.volume !== undefined) {
 			// Remove symbols other than - _ . from the input title
 			let inputName = input.shortTitle.replace(/[^a-z0-9-_.]+/gi, '')
