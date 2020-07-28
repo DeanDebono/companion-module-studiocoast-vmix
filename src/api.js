@@ -222,9 +222,19 @@ exports.initAPI = function() {
 				// Update variables
 				data.inputs.forEach(input => {
 					const previousState = this.data.inputs.find(item => item.key === input.key);
+					const previousIDState = this.data.inputs.find(item => item.number === input.number);
+				
+					if (previousIDState === undefined || (previousIDState && input.shortTitle !== previousIDState.shortTitle)) {
+						if (previousIDState) {
+							if (input.number !== previousIDState.number) {
+								console.log(`[${input.shortTitle}] ID change: from [${previousIDState.number}] to [${input.number}].`);
+							} else {
+								console.log(`Input ID [${input.number}] shortTitle change: from [${previousIDState.shortTitle}] to [${input.shortTitle}].`);
+							}
+						}
+						this.setVariable(`input_${input.number}_name`, input.shortTitle);
+					}
 					
-					this.setVariable(`input_${input.number}_name`, input.shortTitle);
-
 					// Check input has volume and a different or no previous volume
 					if (input.volume !== undefined && (previousState === undefined || input.volume !== previousState.volume)) {
 						const volume = Math.round(parseFloat(input.volume));
